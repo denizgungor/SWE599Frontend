@@ -154,7 +154,7 @@ const styles = theme => ({
 class Main extends Component {
   constructor(props){
    super(props);
-   this.serverAdress = "http://localhost/"; 
+   this.serverAdress = "http://35.243.202.181/"; 
 
    this.state = {
     multiline: 'Controlled',

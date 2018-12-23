@@ -125,7 +125,7 @@ const styles = theme => ({
 class Forecast extends Component {
   constructor(props){
    super(props);
-   this.serverAdress = "http://localhost/"; 
+   this.serverAdress = "http://35.243.202.181/"; 
     this._chart= React.createRef();
 
    this.state = {
