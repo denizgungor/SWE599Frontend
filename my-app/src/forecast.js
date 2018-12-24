@@ -197,26 +197,26 @@ class Forecast extends Component {
     .then(response => response.json())
     .then(data => {
     if(this.state.requirementDefect!==''){
-        result+=this.state.requirementDefect/data[0].RequirementDefect;
+        result+=this.state.requirementDefect*data[0].RequirementDefect;
     }
     if(this.state.codeUnitTestDefect!==''){
-        result+=this.state.codeUnitTestDefect/data[0].CodeUnitTestDefect;
+        result+=this.state.codeUnitTestDefect*data[0].CodeUnitTestDefect;
     }
 
      if(this.state.KLOC!==''){
-        result+=this.state.KLOC/data[0].KLOC;
+        result+=this.state.KLOC*data[0].KLOC;
     }
      if(this.state.requirementPage!==''){
-        result+=this.state.requirementPage/data[0].RequirementPage;
+        result+=this.state.requirementPage*data[0].RequirementPage;
     }
      if(this.state.designPage!==''){
-        result+=this.state.designPage/data[0].DesignPage;
+        result+=this.state.designPage*data[0].DesignPage;
     }
     if(this.state.targetTotalTestClasses!==''){
-        result+=this.state.targetTotalTestClasses/data[0].TargetTotalTestCases;
+        result+=this.state.targetTotalTestClasses*data[0].TargetTotalTestCases;
     }
     if(this.state.totalTestEffort!==''){
-        result+=this.state.totalTestEffort/data[0].TotalTestEffort;
+        result+=this.state.totalTestEffort*data[0].TotalTestEffort;
     }
     this.setState({ result: result});
 
