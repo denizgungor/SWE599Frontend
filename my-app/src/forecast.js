@@ -129,6 +129,15 @@ class Forecast extends Component {
     this._chart= React.createRef();
 
    this.state = {
+    result:0,
+    requirementDefect:'',
+    codeUnitTestDefect:'',
+    KLOC:'',
+    requirementPage:'',
+    designPage:'',
+    targetTotalTestClasses:'',
+    totalTestEffort:'',
+    actualFunctionalDefect:'',
     multiline: 'Controlled',
     startsprint:'',
     endsprint:'',
@@ -181,65 +190,37 @@ class Forecast extends Component {
   };
 
   forecast(){
-  if(this.state.project!==''){
 
-  if(this.state.parameter!==''){
-   var result = [];
+   var result = 0;
    var parameter = this.state.parameter;
-   fetch(this.serverAdress+"projectdetail/"+this.state.project)
+   fetch(this.serverAdress+"projectprediction")
     .then(response => response.json())
     .then(data => {
-        data.map(function(item,index) {  
-         if(parameter === 'Requirement Defect'){
-             result.push(item.RequirementDefect);
-         }
-         if(parameter === 'Code Unit Test Defect'){
-           result.push(item.CodeUnitTestDefect);
-         }
-         if(parameter === 'KLOC'){
-           result.push(item.KLOC);
-         }
-          if(parameter === 'Requirement Page'){
-           result.push(item.RequirementPage);
-         }
-         if(parameter === 'Design Page'){
-           result.push(item.DesignPage);
-         }  
-         if(parameter === 'Target Total Test Cases'){
-           result.push(item.TargetTotalTestCases);
+    if(this.state.requirementDefect!==''){
+        result+=this.state.requirementDefect/data[0].RequirementDefect;
+    }
+    if(this.state.codeUnitTestDefect!==''){
+        result+=this.state.codeUnitTestDefect/data[0].CodeUnitTestDefect;
+    }
 
-         }    
-         if(parameter === 'Total Test Effort'){
-           result.push(item.TotalTestEffort);
-         }   
-         if(parameter === 'Actual Functional Defect'){
-           result.push(item.ActualFunctionalDefect);
-        } 
-         
-    }); 
-        var x = this.state.series;
-         for(var i=0;i<x[0].data.length;i++){
-                x[0].data[i] = null;
-        }
-        for(var i=this.state.startsprint-1;i<this.state.endsprint;i++){
-                x[0].data[i] = result[i];
-                console.log(result[i]);
-        }
-        
+     if(this.state.KLOC!==''){
+        result+=this.state.KLOC/data[0].KLOC;
+    }
+     if(this.state.requirementPage!==''){
+        result+=this.state.requirementPage/data[0].RequirementPage;
+    }
+     if(this.state.designPage!==''){
+        result+=this.state.designPage/data[0].DesignPage;
+    }
+    if(this.state.targetTotalTestClasses!==''){
+        result+=this.state.targetTotalTestClasses/data[0].TargetTotalTestCases;
+    }
+    if(this.state.totalTestEffort!==''){
+        result+=this.state.totalTestEffort/data[0].TotalTestEffort;
+    }
+    this.setState({ result: result});
 
     })
-
-    }
-    else{
-          alert("You need to choose the parameter!")
-
-    }
-  }
-  else{
-          alert("You need to choose the project!")
-
-  }
-
 
   }
 
@@ -310,30 +291,7 @@ class Forecast extends Component {
                 ))}
              </TextField>
             </Grid>   
-            <Grid item xs={3}>
-               <TextField
-                        id="standard-select-currency"
-                        select
-                        label="Parameter"
-                        className={classes.textField}
-                        value={this.state.parameter}
-                        onChange={this.handleChange('parameter')}
-                        SelectProps={{
-                          MenuProps: {
-                            className: classes.menu,
-                          },
-                        }}
-                        helperText="Please choose a parameter "
-                        margin="normal"
-                      >
-                        {this.state.parameters.map(option => (
-                          <MenuItem key={option.value} value={option.value}>
-                                  {option.label}
-                  </MenuItem>
-                ))}
-             </TextField>
-            </Grid>  
-             
+         
         
                <Grid item xs={3}>
                <TextField
@@ -358,12 +316,96 @@ class Forecast extends Component {
              </TextField>
             </Grid>  
 
+           <Grid item xs={3}>
+              <TextField
+                id="standard-number"
+                label="Requirement Defect"
+                value={this.state.requirementDefect}
+                onChange={this.handleChange('requirementDefect')}
+                type="number"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+          </Grid> 
           <Grid item xs={3}>
               <TextField
                 id="standard-number"
-                label="Provide The Parameter Value"
-                value={this.state.value}
-                onChange={this.handleChange('value')}
+                label="Code Unit Test Defect"
+                value={this.state.codeUnitTestDefect}
+                onChange={this.handleChange('codeUnitTestDefect')}
+                type="number"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+          </Grid> 
+          <Grid item xs={3}>
+              <TextField
+                id="standard-number"
+                label="KLOC"
+                value={this.state.KLOC}
+                onChange={this.handleChange('KLOC')}
+                type="number"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+          </Grid> 
+           <Grid item xs={3}>
+              <TextField
+                id="standard-number"
+                label="Requirement Page"
+                value={this.state.requirementPage}
+                onChange={this.handleChange('requirementPage')}
+                type="number"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+          </Grid> 
+            <Grid item xs={3}>
+              <TextField
+                id="standard-number"
+                label="Design Page"
+                value={this.state.designPage}
+                onChange={this.handleChange('designPage')}
+                type="number"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+          </Grid> 
+             <Grid item xs={3}>
+              <TextField
+                id="standard-number"
+                label="Target Total Test classes"
+                value={this.state.targetTotalTestClasses}
+                onChange={this.handleChange('targetTotalTestClasses')}
+                type="number"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+          </Grid> 
+            <Grid item xs={3}>
+              <TextField
+                id="standard-number"
+                label="Total Test Effort"
+                value={this.state.totalTestEffort}
+                onChange={this.handleChange('totalTestEffort')}
                 type="number"
                 className={classes.textField}
                 InputLabelProps={{
